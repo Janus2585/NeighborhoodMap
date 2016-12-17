@@ -1,0 +1,4 @@
+Known bugs
+
+After clicking a bouncing marker, the marker only bounces once
+

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Neighborhood Map</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+
+	<script type="text/javascript" src="jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+	   $(function(){
+	      //alert("Fuckboys have swag.");
+	   });
+	</script>
+	<script src="jasny-Bootstrap.js"></script>
+	<script src="javascript.js"></script>
+
+
+</head>
+
+<style>
+
+      }
+</style>
+<body>
+	<div id="menu">
+    	<div id="menuHeader"> 
+    		<h1>Menu Header</h1>
+		</div>
+		<div id="menuItems">
+			<form action="demo_form.asp">
+			  Keywords <input type="text" name="fname"><br>
+			</form>
+		</div>
+	</div>
+<!-- slider menu icon
+<span class="toggle-button">
+     <div class="menu-bar menu-bar-top"></div>
+     <div class="menu-bar menu-bar-middle"></div>
+     <div class="menu-bar menu-bar-bottom"></div>
+</span>
+-->
+
+	<div id="map"></div>
+    <script>
+      var map;
+      var marker;
+      var markerArray = [];
+      function initMap() {
+      	 //marker locations
+      	 var locations = [
+      	 	  ['City of Boulder', 40.0150,-105.2705, 4],
+		      ['Mt Bierstadt', 39.5845721,-105.6722891, 4],
+		      ['Betasso Preserve Trailhead', 39.997377, -105.398315, 5],
+		      ['University of Colorado Boulder', 40.007581,-105.268125, 3],
+		      ['South Boulder Peak', 39.9538749,-105.301341, 2],
+		      ['Longs Peak', 40.2613295,-105.5859113, 1]
+    	 ];
+       
+       //create the map
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 40.0150, lng: -105.2705},
+          zoom: 9
+      	})
+
+	        //Code borrowed from Daniel Vassallo from stack overflow. URL: http://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example 
+			var infowindow = new google.maps.InfoWindow();
+
+			var i;
+			
+/*
+
+	        
+*/
+		    for (i = 0; i < locations.length; i++) {  
+		      marker = new google.maps.Marker({
+		        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+		        animation: google.maps.Animation.DROP,
+		        map: map
+		      })
+		      markerArray.push(marker);
+		      ;
+
+		      //marker.addListener('click', toggleBounce);
+			    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+			        return function() {
+			          infowindow.setContent(locations[i][0]);
+			          infowindow.open(map, marker);
+			          toggleBounce(marker, markerArray);
+			        }
+			    })(marker, i));
+
+				function toggleBounce(marker, markerArray) {
+					
+					for (i = 0; i < markerArray.length; i++){
+						if (markerArray[i].getAnimation() != null) {
+							markerArray[i].setAnimation(null);
+						}
+					}
+			        
+
+			        if (marker.getAnimation() !== null) {
+			          marker.setAnimation(null);
+			        } else {
+			          marker.setAnimation(google.maps.Animation.BOUNCE);
+			        }
+	        	}
+
+		    }
+	    }
+
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgbK-niNb-j3Q50HxaMikQ_miu_MyqW-Y&callback=initMap"
+    async defer></script> 
+</body>
+</html>
